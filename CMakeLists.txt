@@ -28,29 +28,11 @@ else()
 endif()
 message("Found OPENSSL version: ${OPENSSL_VERSION}")
 
-if(STATIC_BUILD)
-    add_custom_command(
-        OUTPUT ${CMAKE_BINARY_DIR}/librdkafka/lib/librdkafka.a
-        COMMAND ./configure --enable-ssl --prefix=${CMAKE_BINARY_DIR}/librdkafka
-        COMMAND make -j
-        COMMAND make install
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/librdkafka
-        COMMENT "Building librdkafka"
-        VERBATIM
-    )
-    add_custom_target(librdkafka.a ALL
-        DEPENDS ${CMAKE_BINARY_DIR}/librdkafka/lib/librdkafka.a
-    )
+set(RDKAFKA_FIND_REQUIRED ON)
+find_package(RdKafka)
+# Link RdKafka transitive dependencies manually
+set(RDKAFKA_LIBRARY ${RDKAFKA_LIBRARY} ${OPENSSL_CRYPTO_LIBRARY} ${OPENSSL_SSL_LIBRARY})
 
-
-    set(RDKAFKA_LIBRARY  ${RDKAFKA_LIBRARY} ${CMAKE_BINARY_DIR}/librdkafka/lib/librdkafka.a)
-    set(RDKAFKA_INCLUDE_DIR ${CMAKE_BINARY_DIR}/librdkafka/include)
-else()
-    set(RDKAFKA_FIND_REQUIRED ON)
-    find_package(RdKafka)
-    # Link RdKafka transitive dependencies manually
-    set(RDKAFKA_LIBRARY ${RDKAFKA_LIBRARY} ${OPENSSL_CRYPTO_LIBRARY} ${OPENSSL_SSL_LIBRARY})
-endif()
 
 include_directories(${TARANTOOL_INCLUDE_DIRS})
 
