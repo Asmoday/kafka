@@ -628,7 +628,7 @@ consumer_destroy(struct lua_State *L, consumer_t *consumer) {
     if (consumer->rd_consumer != NULL) {
         /* Destroy handle */
         // FIXME: kafka_destroy hangs forever
-        rd_kafka_destroy_flags(consumer->rd_consumer, RD_KAFKA_DESTROY_F_NO_CONSUMER_CLOSE);
+        // rd_kafka_destroy_flags(consumer->rd_consumer, RD_KAFKA_DESTROY_F_NO_CONSUMER_CLOSE);
     }
 
     free(consumer);
