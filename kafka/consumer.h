@@ -58,4 +58,7 @@ int lua_consumer_gc(struct lua_State *L);
 
 int lua_create_consumer(struct lua_State *L);
 
+int lua_consumer_commit_sync(struct  lua_State *L);
+
+int lua_consumer_commit_async(struct  lua_State *L);
 #endif //TNT_KAFKA_CONSUMER_H

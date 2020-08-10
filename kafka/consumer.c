@@ -592,6 +592,39 @@ lua_consumer_store_offset(struct lua_State *L) {
     return 0;
 }
 
+int
+lua_consumer_commit_sync(struct  lua_State *L) {
+    consumer_t *consumer = lua_check_consumer(L, 1);
+    rd_kafka_resp_err_t err = rd_kafka_commit(consumer->rd_consumer, NULL, 0); // sync commit of current offsets
+
+    if (err) {
+        const char *const_err_str = rd_kafka_err2str(err);
+        char err_str[512];
+        strcpy(err_str, const_err_str);
+        int fail = safe_pushstring(L, err_str);
+        return fail ? lua_push_error(L): 1;
+    }
+    return 0;
+
+}
+
+int
+lua_consumer_commit_async(struct  lua_State *L) {
+
+    consumer_t *consumer = lua_check_consumer(L, 1);
+    rd_kafka_resp_err_t err = rd_kafka_commit(consumer->rd_consumer, NULL, 1);
+
+    if (err) {
+        const char *const_err_str = rd_kafka_err2str(err);
+        char err_str[512];
+        strcpy(err_str, const_err_str);
+        int fail = safe_pushstring(L, err_str);
+        return fail ? lua_push_error(L): 1;
+    }
+    return 0;
+}
+
+
 static ssize_t
 wait_consumer_close(va_list args) {
     rd_kafka_t *rd_consumer = va_arg(args, rd_kafka_t *);

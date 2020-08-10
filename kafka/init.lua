@@ -185,6 +185,14 @@ function Consumer:store_offset(message)
     return self._consumer:store_offset(message)
 end
 
+function Consumer:commit_sync()
+    return self._consumer:commit_sync()
+end
+
+function Consumer:commit_async()
+    return self._consumer:commit_async()
+end
+
 local Producer = {}
 
 Producer.__index = Producer

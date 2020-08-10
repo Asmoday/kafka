@@ -27,6 +27,8 @@ luaopen_kafka_tntkafka(lua_State *L) {
             {"poll_rebalances", lua_consumer_poll_rebalances},
             {"store_offset", lua_consumer_store_offset},
             {"close", lua_consumer_close},
+            {"commit_sync", lua_consumer_commit_sync},
+            {"commit_async", lua_consumer_commit_async},
             {"__tostring", lua_consumer_tostring},
             {"__gc", lua_consumer_gc},
             {NULL, NULL}
