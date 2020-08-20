@@ -336,7 +336,7 @@ lua_producer_produce(struct lua_State *L) {
     char *key = (char *)lua_tostring(L, -1);
     lua_pop(L, 1);
 
-    size_t key_len = key != NULL ? strlen(key) : 0;
+    size_t key_len = key != NULL ? sizeof(key) : 0;
 
     lua_pushstring(L, "value");
     lua_gettable(L, -2 );
@@ -344,7 +344,7 @@ lua_producer_produce(struct lua_State *L) {
     char *value = (char *)lua_tostring(L, -1);
     lua_pop(L, 1);
 
-    size_t value_len = value != NULL ? strlen(value) : 0;
+    size_t value_len = value != NULL ? sizeof(value) : 0;
 
     if (key == NULL && value == NULL) {
         int fail = safe_pushstring(L, "producer message must contains non nil key or value");
