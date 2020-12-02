@@ -19,7 +19,7 @@ function Consumer.create(config)
     local new = {
         config = config,
         _consumer = consumer,
-        _output_ch = fiber.channel(10000),
+        _output_ch = fiber.channel(100),
     }
     setmetatable(new, Consumer)
 
