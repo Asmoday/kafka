@@ -53,7 +53,7 @@ consumer_poll_loop(void *arg) {
 
                     pthread_mutex_unlock(&event_queues->consume_queue->lock);
 
-                    if (count >= 50000) {
+                    if (count >= 100) {
                         // throttling calls with 100ms sleep when there are too many messages pending in queue
                         usleep(100000);
                     }
