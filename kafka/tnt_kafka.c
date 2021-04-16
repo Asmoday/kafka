@@ -29,8 +29,8 @@ luaopen_kafka_tntkafka(lua_State *L) {
             {"close", lua_consumer_close},
             {"commit_sync", lua_consumer_commit_sync},
             {"commit_async", lua_consumer_commit_async},
+            {"destroy", lua_consumer_destroy},
             {"__tostring", lua_consumer_tostring},
-            {"__gc", lua_consumer_gc},
             {NULL, NULL}
     };
 
@@ -67,8 +67,8 @@ luaopen_kafka_tntkafka(lua_State *L) {
             {"poll_logs", lua_producer_poll_logs},
             {"poll_errors", lua_producer_poll_errors},
             {"close", lua_producer_close},
+            {"destroy", lua_producer_destroy},
             {"__tostring", lua_producer_tostring},
-            {"__gc", lua_producer_gc},
             {NULL, NULL}
     };
 
@@ -84,6 +84,7 @@ luaopen_kafka_tntkafka(lua_State *L) {
 	static const struct luaL_Reg meta [] = {
         {"create_consumer", lua_create_consumer},
         {"create_producer", lua_create_producer},
+        {"librdkafka_version", lua_librdkafka_version},
         {NULL, NULL}
 	};
 	luaL_register(L, NULL, meta);
